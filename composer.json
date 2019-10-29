@@ -1,5 +1,5 @@
 {
-    "name": "limboniatech/limbonia-app=base",
+    "name": "limboniatech/limbonia-app-base",
     "description": "This is the Limbonia App Base Library",
     "type": "library",
     "license": "BSD-3-Clause",
