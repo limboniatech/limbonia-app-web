@@ -79,7 +79,7 @@ trait ModelController
   /**
    * Return the model object stored for use with this controller
    *
-   * @return /Limbonia/Model
+   * @return \Limbonia\Model
    */
   public function getModel()
   {
@@ -117,6 +117,32 @@ trait ModelController
     $this->processApiCheckModel();
     return null;
   }
+
+  /**
+   * Remove any ignored fields of the specified type from the specified data then return it
+   *
+   * @param string $sIgnoreType
+   * @param array $hData
+   * @return array
+   */
+  protected function removeIgnoredFields($sIgnoreType, $hData)
+  {
+    if (empty($this->aIgnore[$sIgnoreType]))
+    {
+      return $hData;
+    }
+
+    foreach ($this->aIgnore[$sIgnoreType] as $sField)
+    {
+      if (isset($hData[$sField]))
+      {
+        unset($hData[$sField]);
+      }
+    }
+
+    return $hData;
+  }
+
 
   protected function getList(array $aFields = [])
   {

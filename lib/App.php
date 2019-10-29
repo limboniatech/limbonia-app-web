@@ -11,7 +11,7 @@ namespace Limbonia;
  */
 abstract class App
 {
-  const SETTINGS_NAME_ACTIVE_controllerS = 'ActiveControllers';
+  const SETTINGS_NAME_ACTIVE_CONTROLLERS = 'ActiveControllers';
 
   /**
    * The config that comes from external sources
@@ -1175,7 +1175,7 @@ PRIMARY KEY(Type)");
   {
     if (is_null(self::$hActiveController))
     {
-      self::$hActiveController = $this->getSettings(self::SETTINGS_NAME_ACTIVE_controllerS);
+      self::$hActiveController = $this->getSettings(self::SETTINGS_NAME_ACTIVE_CONTROLLERS);
     }
 
     return self::$hActiveController;
@@ -1218,7 +1218,7 @@ PRIMARY KEY(Type)");
       self::$hActiveController[strtolower($sActivedDriver)] = $sActivedDriver;
     }
 
-    if (!$this->saveSettings(self::SETTINGS_NAME_ACTIVE_controllerS, self::$hActiveController))
+    if (!$this->saveSettings(self::SETTINGS_NAME_ACTIVE_CONTROLLERS, self::$hActiveController))
     {
       throw new Exception("Failed to save new active controller list");
     }
@@ -1261,7 +1261,7 @@ PRIMARY KEY(Type)");
       unset(self::$hActiveController[strtolower($sDeactivedDriver)]);
     }
 
-    if (!$this->saveSettings(self::SETTINGS_NAME_ACTIVE_controllerS, self::$hActiveController))
+    if (!$this->saveSettings(self::SETTINGS_NAME_ACTIVE_CONTROLLERS, self::$hActiveController))
     {
       throw new Exception("Failed to save new active controller list");
     }

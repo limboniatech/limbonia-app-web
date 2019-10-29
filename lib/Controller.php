@@ -336,35 +336,10 @@ class Controller
   }
 
   /**
-   * Remove any ignored fields of the specified type from the specified data then return it
-   *
-   * @param string $sIgnoreType
-   * @param array $hData
-   * @return array
-   */
-  protected function removeIgnoredFields($sIgnoreType, $hData)
-  {
-    if (empty($this->aIgnore[$sIgnoreType]))
-    {
-      return $hData;
-    }
-
-    foreach ($this->aIgnore[$sIgnoreType] as $sField)
-    {
-      if (isset($hData[$sField]))
-      {
-        unset($hData[$sField]);
-      }
-    }
-
-    return $hData;
-  }
-
-  /**
    * Perform the base "GET" code then return null on success
    *
    * @return null
-   * @throws \Exception
+   * @throws \Limbonia\Exception\Web
    */
   protected function processApiHead()
   {
@@ -375,7 +350,7 @@ class Controller
    * Perform and return the default "GET" code
    *
    * @return array
-   * @throws \Exception
+   * @throws \Limbonia\Exception\Web
    */
   protected function processApiGet()
   {
@@ -386,7 +361,7 @@ class Controller
    * Run the default "PUT" code and return the updated data
    *
    * @return array
-   * @throws \Exception
+   * @throws \Limbonia\Exception\Web
    */
   protected function processApiPut()
   {
@@ -397,7 +372,7 @@ class Controller
    * Run the default "POST" code and return the created data
    *
    * @return array
-   * @throws \Exception
+   * @throws \Limbonia\Exception\Web
    */
   protected function processApiPost()
   {
@@ -408,7 +383,7 @@ class Controller
    * Run the default "DELETE" code and return true
    *
    * @return boolean - True on success
-   * @throws \Exception
+   * @throws \Limbonia\Exception\Web
    */
   protected function processApiDelete()
   {
@@ -436,7 +411,7 @@ class Controller
    * Process the current API call and return the appropriate data
    *
    * @return mixed
-   * @throws \Exception
+   * @throws \Limbonia\Exception\Web
    */
   public function processApi()
   {
