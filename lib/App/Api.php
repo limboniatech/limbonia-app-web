@@ -68,6 +68,54 @@ class Api extends \Limbonia\App\Web
   }
 
   /**
+   * Generate and return the controller of the specified type
+   *
+   * @param string $sType
+   * @return \Limbonia\Interfaces\Controller\Api
+   */
+  public function controllerFactory($sType)
+  {
+    $sDriver = \Limbonia\Controller\Api::driver($sType) ?? \Limbonia\Controller::driver($sType);
+
+    if (!isset(self::$hControllerList[$sDriver]))
+    {
+      try
+      {
+        self::$hControllerList[$sDriver] = \Limbonia\Controller\Api::factory($sType, $this);
+      }
+      catch (\Throwable $th)
+      {
+        $oController = \Limbonia\Controller::factory($sType, $this);
+
+        if (!($oController instanceof \Limbonia\Interfaces\Controller\Api))
+        {
+          throw new \Limbonia\Exception("Controller does not implement \Limbonia\Interfaces\Controller\Api");
+        }
+    
+        self::$hControllerList[$sDriver] = $oController;
+      }
+    }
+
+    return self::$hControllerList[$sDriver];
+  }
+
+  /**
+   * Return the controller specified by the router
+   * 
+   * @return \Limbonia\Interfaces\Controller\Api
+   * @throws \Limbonia\Exception
+   */
+  protected function getController()
+  {
+    if (empty($this->oRouter->controller))
+    {
+      throw new \Limbonia\Exception('No controller specified');
+    }
+
+    return $this->controllerFactory($this->oRouter->controller);
+  }
+
+  /**
    * Get the user associated with the specified auth_token and return it
    *
    * @param type $sAuthToken
@@ -123,12 +171,15 @@ class Api extends \Limbonia\App\Web
    */
   protected function render()
   {
-    if (is_null($this->oRouter->controller))
+    try
     {
-      throw new \Exception('No controller found');
+      $oController = $this->getController();
     }
-
-    $oController = $this->controllerFactory($this->oRouter->controller);
+    catch (\Limbonia\Exception $e)
+    {
+      throw new \Limbonia\Exception\Web('Valid controller not found: ' . $e->getMessage(), null, 400, $e);
+    }
+    
     $xResult = $oController->processApi();
 
     if ($xResult instanceof \Limbonia\ModelList || $xResult instanceof \Limbonia\Model || $xResult instanceof \Limbonia\Interfaces\Result)
@@ -150,26 +201,39 @@ class Api extends \Limbonia\App\Web
       $this->oUser = $this->generateUser();
       $xOutput = $this->render();
     }
-    catch (\Limbonia\Exception\Web $e)
+    catch (\Throwable $e)
     {
-      http_response_code($e->getResponseCode());
       $xOutput =
       [
-        'code' => $e->getCode(),
+        'error_code' => $e->getCode(),
         'message' => $e->getMessage()
       ];
-    }
-    catch (\Exception $e)
-    {
-      http_response_code(400);
-      $xOutput =
-      [
-        'code' => $e->getCode(),
-        'message' => $e->getMessage()
-      ];
+  
+      if (empty($xOutput['error_code']))
+      {
+        unset($xOutput['error_code']);
+      }
+  
+      if ($e instanceof \Limbonia\Exception\Auth)
+      {
+        http_response_code(401);
+      }
+      elseif ($e instanceof \Limbonia\Exception\Web)
+      {
+        http_response_code($e->getResponseCode());
+      }
+      else
+      {
+        http_response_code(400);
+      }
     }
     finally
     {
+      if (http_response_code() == 405)
+      {
+        $this->getController()->headerAllowedHttpMethods();
+      }
+
       ob_end_clean();
       die(parent::outputJson($xOutput));
     }

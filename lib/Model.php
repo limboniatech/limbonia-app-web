@@ -10,9 +10,30 @@ namespace Limbonia;
  * @author Lonnie Blansett <lonnie@limbonia.tech>
  * @package Limbonia
  */
-class Model extends Item
+class Model implements \ArrayAccess, \Countable, \SeekableIterator
 {
   use \Limbonia\Traits\HasApp;
+  use \Limbonia\Traits\Item
+  {
+    __get as protected magicGet;
+  }
+  
+    /**
+     * Generate an item list based on the specified type and SQL query
+     *
+     * @param string $sType
+     * @param string $sQuery
+     * @param\Limbonia\Database $oDatabase (optional)
+     * @return\Limbonia\ModelList
+     */
+    public static function getList($sType, $sQuery,\Limbonia\Database $oDatabase = null)
+    {
+      $oDatabase = $oDatabase instanceof \Limbonia\Database ? $oDatabase : \Limbonia\Database::getDB();
+      $oList = new \Limbonia\ModelList($sType, $oDatabase->query($sQuery));
+      $oList->setDatabase($oDatabase);
+      return $oList;
+    }
+
   /**
    * Get the specified data
    *
@@ -21,7 +42,7 @@ class Model extends Item
    */
   public function __get($sName)
   {
-    $xGet = parent::__get($sName);
+    $xGet = $this->magicGet($sName);
 
     //if the returned data is a Model and we have a valid App
     if ($xGet instanceof Model && $this->oApp instanceof App)

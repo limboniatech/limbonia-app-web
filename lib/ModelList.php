@@ -12,20 +12,22 @@ namespace Limbonia;
  */
 class ModelList extends ItemList
 {
+  use \Limbonia\Traits\HasApp;
+
   /**
-	 * Attempt to create and return an model based on the data
-	 *
-	 * @param array $hModel
-	 * @return Model
-	 */
-	protected function getModel(array $hModel = [])
-	{
+   * Attempt to create and return an model based on the data
+   *
+   * @param array $hModel
+   * @return Model
+   */
+  protected function getModel(array $hModel = [])
+  {
     if (empty($hModel))
     {
       return null;
     }
-
-		$oModel = Model::fromArray($this->sTable, $hModel, $this->getDatabase());
+	  
+    $oModel = Model::fromArray($this->sTable, $hModel, $this->getDatabase());
 
     if ($this->oApp instanceof \Limbonia\App)
     {
@@ -33,16 +35,16 @@ class ModelList extends ItemList
     }
 
     return $oModel;
-	}
+  }
 
   /**
-	 * Attempt to create and return an item based on the data
-	 *
-	 * @param array $hItem
-	 * @return Item
-	 */
-	protected function getItem(array $hItem = [])
-	{
+   * Attempt to create and return an item based on the data
+   *
+   * @param array $hItem
+   * @return Item
+   */
+  protected function getItem(array $hItem = [])
+  {
     return $this->getModel($hItem);
-	}
+  }
 }

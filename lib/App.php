@@ -161,6 +161,7 @@ abstract class App
     'auth',
     'profile'
   ];
+
   /**
    * List of configuration data
    *
@@ -542,10 +543,10 @@ abstract class App
 
     $this->sType = strtolower(str_replace(__CLASS__ . "\\", '', get_class($this)));
 
-    if (isset($hConfig['domaindirview']))
+    if (isset($hConfig['domaindirtemplate']))
     {
-      Domain::setDirView($hConfig['domaindirview']);
-      unset($hConfig['domaindirview']);
+      Domain::setDirTemplate($hConfig['domaindirtemplate']);
+      unset($hConfig['domaindirtemplate']);
     }
 
     if (isset($hConfig['domain']))
