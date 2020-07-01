@@ -14,7 +14,7 @@
         "limboniatech/limbonia-loader": "dev-master",
         "limboniatech/limbonia-base": "dev-master",
         "limboniatech/limbonia-session-manager": "dev-master",
-        "limboniatech/limbonia-tag": "dev-master",
+        "limboniatech/limbonia-tag": "dev-master"
     },
     "autoload": {
         "psr-4": {
