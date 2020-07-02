@@ -33,26 +33,6 @@ class Web extends \Limbonia\App
   ];
 
   /**
-   * This web app's router
-   *
-   * @var \Limbonia\Router
-   */
-  protected $oRouter = null;
-
-  /**
-   * Output the specified data as JSON
-   *
-   * @param type $xData
-   */
-  public static function outputJson($xData)
-  {
-    header("Cache-Control: no-cache, must-revalidate");
-    header("Expires: Sat, 01 Jan 2000 00:00:00 GMT");
-    header("Content-Type: application/json");
-    return json_encode($xData);
-  }
-
-  /**
    * The app constructor
    *
    * NOTE: This constructor should only be used by the factory and *never* directly
