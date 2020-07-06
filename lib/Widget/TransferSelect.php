@@ -28,7 +28,7 @@ class TransferSelect extends \Limbonia\Widget
    *
    * Call the parent constructor and create the child select objects.
    *
-   * @param type $sName
+   * @param string $sName
    * @param \Limbonia\App $oApp
    */
   public function __construct($sName = null, \Limbonia\App $oApp = null)

@@ -149,7 +149,7 @@ class Editor extends \Limbonia\Widget
   /**
    * Return the encoded version of the specified value
    *
-   * @param type $xValue
+   * @param mixed $xValue
    * @return string
    */
   protected function encode($xValue)
@@ -159,7 +159,7 @@ class Editor extends \Limbonia\Widget
       return 'true';
     }
 
-    if ($xValue === true)
+    if ($xValue === false)
     {
       return 'false';
     }

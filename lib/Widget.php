@@ -185,7 +185,7 @@ class Widget implements \Limbonia\Interfaces\Tag
   /**
    * Set the Ajax Status to the specified value
    *
-   * @param type $bReportStatus
+   * @param array $bReportStatus
    */
   public static function setAjaxStatus($bReportStatus = true)
   {
@@ -277,7 +277,7 @@ class Widget implements \Limbonia\Interfaces\Tag
   /**
    * Update the rest of the parameter array using the data stored in the "expand" parameter
    *
-   * @param type $hParam
+   * @param array $hParam
    * @return array List of expanded parameters
    */
   public function expandParameters($hParam)
@@ -343,7 +343,7 @@ class Widget implements \Limbonia\Interfaces\Tag
    *
    * @todo This was imported from "Controller" and needs to be worked on before it is usable
    *
-   * @param type $sName
+   * @param string $sName
    * @return type
    */
   protected function getSessionCache($sName)
