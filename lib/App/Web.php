@@ -123,7 +123,7 @@ class Web extends \Limbonia\App
   {
     parent::activateController($sController);
     $aBlackList = $this->controllerBlackList ?? [];
-    $sDriver = \Limbonia\Controller::driver($sController);
+    $sDriver = \Limbonia\Controller\Web::driver($sController);
 
     if (!in_array($sDriver, $aBlackList) && $this->user()->hasResource($sDriver))
     {
@@ -155,7 +155,7 @@ class Web extends \Limbonia\App
   public function deactivateController($sController)
   {
     parent::deactivateController($sController);
-    $sDriver = \Limbonia\Controller::driver($sController);
+    $sDriver = \Limbonia\Controller\Web::driver($sController);
     $sTypeClass = '\\Limbonia\\Controller\\' . $sDriver;
     unset($_SESSION['ResourceList'][$sDriver]);
     unset($_SESSION['ControllerGroups'][$sTypeClass::getGroup()][strtolower($sDriver)]);
