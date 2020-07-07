@@ -1,5 +1,5 @@
 <?php
-namespace Limbonia\Traits\Controller;
+namespace Limbonia\Traits\Controller\Web;
 
 /**
  * Limbonia ModelController Trait
@@ -9,7 +9,7 @@ namespace Limbonia\Traits\Controller;
  * @author Lonnie Blansett <lonnie@limbonia.tech>
  * @package Limbonia
  */
-trait WebModel
+trait HasModel
 {
   /**
    * Initialize this controller's custom data, if there is any
