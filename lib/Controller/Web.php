@@ -9,7 +9,7 @@ namespace Limbonia\Controller;
  * @author Lonnie Blansett <lonnie@limbonia.tech>
  * @package Limbonia
  */
-class Web extends Base implements \Limbonia\Interfaces\Controller\Api
+class Web extends \Limbonia\Controller implements \Limbonia\Interfaces\Controller\Web
 {
   use \Limbonia\Traits\Controller\Web;
   use \Limbonia\Traits\DriverList;
